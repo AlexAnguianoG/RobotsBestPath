@@ -1,4 +1,4 @@
-
+# ROBOTS BEST PATH
 # ? Puntos:
 # 1 - Montañita, con vaso con agua
 # 2 - NADA, con peso
@@ -62,11 +62,11 @@ def resetData():
     dejoPeso = False
     tiempo = 0
 
-def dfs(visitados, puntos, punto):
+def búsqueda(visitados, puntos, punto):
     global tiempo, subioMontaña, agarroVaso, bajoVaso, agarroPeso, dejoPeso
 
     if punto not in visitados:
-        print(punto.nombre + ", " + str(punto.tiempo))
+        print(punto.nombre + " - " + str(punto.tiempo))
         if(punto.tipo == "Montaña"):
             subioMontaña = True
             if(punto.objeto == "vaso" and not agarroVaso):
@@ -81,14 +81,14 @@ def dfs(visitados, puntos, punto):
         tiempo = tiempo + punto.tiempo
         # print(str(subioMontaña)  + "  "  + str(bajoVaso) + " " + str(dejoPeso))
         for siguiente in puntos[punto]:
-            dfs(visitados, puntos, siguiente)
+            búsqueda(visitados, puntos, siguiente)
             if(subioMontaña and bajoVaso and dejoPeso):
                 return tiempo
 
 
 for i,p in enumerate(list(puntos)[0:4]):
     print("\n\n---- Desde Punto " + str(i+1) + "----")
-    duracion = dfs(visitados, puntos, p)
+    duracion = búsqueda(visitados, puntos, p)
     
     print("\nDuró: " + str(duracion))
     if(duracion < mejorTiempo):
@@ -98,4 +98,4 @@ for i,p in enumerate(list(puntos)[0:4]):
     visitados.clear()
     resetData()
 
-print("\nSecuencia de Punto " + mejorCicuito + ", con tiempo: " + str(mejorTiempo))
+print("\n\nSecuencia de Punto " + mejorCicuito + ", con tiempo: " + str(mejorTiempo))
